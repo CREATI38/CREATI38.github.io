@@ -69,21 +69,43 @@ h1, h2, h3 { line-height: 1.2; }
 }
 
 .section-label {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.section-label-light { color: #7dd3fc; }
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.section-label-light {
+  color: #7dd3fc;
+}
+
+.section-label-light::before {
+  background: #7dd3fc;
+}
 
 .section-header h2 {
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 700;
   color: var(--text-primary);
+}
+
+/* Fix: override for headings inside dark sections */
+.section-dark .section-header h2 {
+  color: #f1f5f9;
 }
 
 .text-light { color: #f1f5f9; }
@@ -337,6 +359,19 @@ h1, h2, h3 { line-height: 1.2; }
   transform: translateY(-2px);
 }
 
+.btn-ghost {
+  background: transparent;
+  color: #94a3b8;
+  border-color: transparent;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.btn-ghost:hover {
+  color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
 /* Scroll indicator */
 .hero-scroll {
   position: absolute;
@@ -494,18 +529,21 @@ h1, h2, h3 { line-height: 1.2; }
 .project-card {
   background: var(--bg-white);
   border: 1px solid var(--border);
+  border-top: 3px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition),
+              border-color var(--transition), border-top-color var(--transition);
 }
 
 .project-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-3px);
   border-color: #bfdbfe;
+  border-top-color: var(--accent);
 }
 
 .project-header {
@@ -605,8 +643,14 @@ h1, h2, h3 { line-height: 1.2; }
 .timeline-content {
   background: var(--bg-white);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: 24px 28px;
+  transition: box-shadow var(--transition);
+}
+
+.timeline-content:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .timeline-header {
@@ -682,6 +726,7 @@ h1, h2, h3 { line-height: 1.2; }
   gap: 20px;
   background: var(--bg-white);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: 24px;
   transition: box-shadow var(--transition), transform var(--transition);
@@ -738,40 +783,61 @@ h1, h2, h3 { line-height: 1.2; }
 /* =====================================================
    CONTACT
    ===================================================== */
+.section-dark .section-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section-dark .section-label {
+  justify-content: center;
+}
+
 .contact-intro {
-  max-width: 540px;
+  max-width: 500px;
+  margin: 0 auto 48px;
   color: #94a3b8;
   font-size: 1rem;
   line-height: 1.75;
-  margin-bottom: 40px;
+  text-align: center;
 }
 
 .contact-links {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .contact-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 24px;
+  padding: 15px 24px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius);
   color: #cbd5e1;
   font-size: 0.9375rem;
   font-weight: 500;
   transition: background var(--transition), border-color var(--transition),
-              color var(--transition), transform var(--transition);
+              color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
 .contact-card:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #f1f5f9;
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #f8fafc;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.contact-card svg {
+  opacity: 0.7;
+  transition: opacity var(--transition);
+}
+
+.contact-card:hover svg {
+  opacity: 1;
 }
 
 /* =====================================================
